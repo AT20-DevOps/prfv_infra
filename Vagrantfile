@@ -18,7 +18,6 @@ Vagrant.configure("2") do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
   end
-
   #VM 1 ci-server
   config.vm.define "ci-server" do |ciserver|
     ciserver.vm.network "private_network", ip: '192.168.56.60'
@@ -28,8 +27,6 @@ Vagrant.configure("2") do |config|
     #provision with docker compose
     ciserver.vm.provision:docker_compose
   end
-
-
   #VM 2 server-2
   config.vm.define "server-2" do |server2|
     server2.vm.network "private_network", ip: '192.168.56.61'
@@ -42,7 +39,6 @@ Vagrant.configure("2") do |config|
     server2.vm.provision:docker_compose
     server2.vm.provision :file, source: "docker-compose.yaml", destination: "docker-compose.yaml"
     server2.vm.provision :file, source: ".env", destination: ".env"
-
   end
 
 end
