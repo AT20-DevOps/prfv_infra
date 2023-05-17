@@ -1,8 +1,3 @@
-$script = <<-SCRIPT
-echo "I like Vagrant"
-echo "I love Linux"
-date > ~/vagrant_provisioned_at
-SCRIPT
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
@@ -18,31 +13,33 @@ Vagrant.configure("2") do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
   end
+  #provision with docker
+  config.vm.provision :docker
+
 
   #VM 1 ci-server
   config.vm.define "ci-server" do |ciserver|
     ciserver.vm.network "private_network", ip: '192.168.56.60'
     ciserver.vm.hostname = "ci-server"
-    #provision with docker
-    ciserver.vm.provision :docker
-    #provision with docker compose
-    ciserver.vm.provision:docker_compose
+    ciserver.vm.provision :file, source:"../docker/docker-compose.ci.yaml", destination:"docker-compose.yaml"
+    ciserver.vm.provision :docker_compose, yml:"/home/vagrant/docker-compose.yaml", run: "always"
+
   end
 
 
   #VM 2 server-2
-  config.vm.define "server-2" do |server2|
-    server2.vm.network "private_network", ip: '192.168.56.61'
-    server2.vm.hostname = "server-2"
+  #config.vm.define "server-2" do |server2|
+    #server2.vm.network "private_network", ip: '192.168.56.61'
+    #server2.vm.hostname = "server-2"
     #provision with dockery
-    server2.vm.provision :docker
+    #server2.vm.provision :docker
     #provision AT20_CONVERT_SERVICE
-    server2.vm.provision :file, source: "AT20_CONVERT_SERVICE_TS", destination: "AT20_CONVERT_SERVICE_TS"
+    #server2.vm.provision :file, source: "AT20_CONVERT_SERVICE_TS", destination: "AT20_CONVERT_SERVICE_TS"
     #provision with docker compose
-    server2.vm.provision:docker_compose
-    server2.vm.provision :file, source: "docker-compose.yaml", destination: "docker-compose.yaml"
-    server2.vm.provision :file, source: ".env", destination: ".env"
+    #server2.vm.provision:docker_compose
+    #server2.vm.provision :file, source: "docker-compose.yaml", destination: "docker-compose.yaml"
+    #server2.vm.provision :file, source: ".env", destination: ".env"
 
-  end
+  #end
 
 end
