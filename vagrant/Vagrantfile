@@ -32,6 +32,15 @@ Vagrant.configure("2") do |config|
   config.vm.define "server-2" do |server2|
     server2.vm.network "private_network", ip: '192.168.56.61'
     server2.vm.hostname = "server-2"
-
   end
+
+#VM 3 server-3
+  config.vm.define "server-3" do |server3|
+    server3.vm.network "private_network", ip: '192.168.56.62'
+    server3.vm.hostname = "server3"
+    server3.vm.provision :file, source:"../docker/docker-compose.cd.yaml", destination:"docker-compose.yaml"
+    server3.vm.provision :docker_compose, yml:"/home/vagrant/docker-compose.yaml", run: "always"
+    server3.vm.provision :shell, inline:"sudo chmod 777 /var/run/docker.sock"
+  end
+
 end
