@@ -2,3 +2,11 @@
 /vagrant/.vagrant
 /vagrant/ubuntu-bionic-18.04-cloudimg-console.log
 /vagrant/.env
+/terraform/.terraform
+/terraform/.terraform.lock.hcl
+/terraform/terraform.exe
+/terraform/terraform.tfstate
+/terraform/terraform.tfstate.backup
+/terraform/virtualbox.box
+
+
