@@ -8,5 +8,6 @@
 /terraform/terraform.tfstate
 /terraform/terraform.tfstate.backup
 /terraform/virtualbox.box
-
+/terraform/vagrant
+/terraform/vagrant.pub
 
